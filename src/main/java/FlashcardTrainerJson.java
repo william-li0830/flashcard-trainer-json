@@ -84,7 +84,7 @@ public class FlashcardTrainerJson {
         String password = scanner.nextLine();
         UserProfile newProfile = new UserProfile(name, password, 0, 0);
 
-        userProfiles.put(name, newProfile);
+        userProfiles.put(name.toLowerCase(), newProfile);
         System.out.println("New profile created!");
         jsonManager.saveUserProfiles(userProfiles);
 
@@ -108,12 +108,19 @@ public class FlashcardTrainerJson {
                 activeProfile.increaseIncorrectCount();
                 System.out.println("Answer: " + answer);
             }
-            
+
             jsonManager.saveUserProfiles(userProfiles);
         }
     }
-    
-    private void viewStats() {
-        System.out.println();
+
+    private static void viewStats() {
+        int correct = activeProfile.getCorrectCount();
+        int incorrect = activeProfile.getIncorrectCount();
+        int rate = correct * 100 / (correct + incorrect);
+
+        System.out.println("Profile: " + activeProfile.getUsername());
+        System.out.println("Correct: " + correct);
+        System.out.println("Incorrect: " + incorrect);
+        System.out.println("Correct Rate: " + rate + "%");
     }
 }
