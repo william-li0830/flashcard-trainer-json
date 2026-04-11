@@ -10,6 +10,7 @@ public class UserProfile {
     private int correctCount;
     private int incorrectCount;
 
+
     public UserProfile(String username, String password, int correctCount, int incorrectCount) {
         this.username = username;
         this.password = password;
@@ -33,4 +34,11 @@ public class UserProfile {
         return incorrectCount;
     }
 
+    public void increaseCorrectCount() {
+        correctCount++;
+    }
+
+    public void increaseIncorrectCount() {
+        incorrectCount++;
+    }
 }

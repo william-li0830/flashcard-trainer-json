@@ -10,8 +10,8 @@ public class Flashcard {
     private String topic;
 
     public Flashcard(String question, String answer, String topic) {
-        this.answer = answer;
         this.question = question;
+        this.answer = answer;
         this.topic = topic;
     }
 

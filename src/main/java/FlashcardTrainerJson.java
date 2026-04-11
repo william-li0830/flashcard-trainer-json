@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -36,7 +37,34 @@ public class FlashcardTrainerJson {
         }
 
         System.out.println("Welcome " + activeProfile.getUsername());
-        System.out.println("MAIN MENU");
+        System.out.println("======= MAIN MENU =======");
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("1. Study");
+            System.out.println("2. View Your Stats");
+            System.out.println("3. Switch Profile");
+            System.out.println("4. Exit");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    study();
+                    break;
+                case 2:
+                    viewStats();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
 
     }
 
@@ -61,5 +89,31 @@ public class FlashcardTrainerJson {
         jsonManager.saveUserProfiles(userProfiles);
 
         return newProfile;
+    }
+
+    public static void study() {
+        Collections.shuffle(flashcards);
+
+        for (Flashcard card : flashcards) {
+            System.out.println(card.getQuestion());
+
+            String userAnswer = scanner.nextLine().trim();
+            String answer = card.getAnswer().trim();
+
+            if (userAnswer.equalsIgnoreCase(answer)) {
+                System.out.println("Correct!");
+                activeProfile.increaseCorrectCount();
+            } else {
+                System.out.println("Incorrect!");
+                activeProfile.increaseIncorrectCount();
+                System.out.println("Answer: " + answer);
+            }
+            
+            jsonManager.saveUserProfiles(userProfiles);
+        }
+    }
+    
+    private void viewStats() {
+        System.out.println();
     }
 }
