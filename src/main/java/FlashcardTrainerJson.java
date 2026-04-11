@@ -25,7 +25,40 @@ public class FlashcardTrainerJson {
 
         System.out.println("Welcome to the flashcard trainer");
 
-        System.out.println("Enter a profile name or create a new one:");
+        login();
+
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Welcome " + activeProfile.getUsername());
+            System.out.println("======= MAIN MENU =======");
+            System.out.println("1. Study");
+            System.out.println("2. View Your Stats");
+            System.out.println("3. Switch Profile");
+            System.out.println("4. Exit");
+
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    study();
+                    break;
+                case "2":
+                    viewStats();
+                    break;
+                case "3":
+                    login();
+                    break;
+                case "4":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private static void login() {
+        System.out.println("Enter username:");
         String name = scanner.nextLine();
 
         if (userProfiles.containsKey(name)) {
@@ -35,37 +68,6 @@ public class FlashcardTrainerJson {
         } else {
             activeProfile = createNewProfile(name);
         }
-
-        System.out.println("Welcome " + activeProfile.getUsername());
-        System.out.println("======= MAIN MENU =======");
-
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("1. Study");
-            System.out.println("2. View Your Stats");
-            System.out.println("3. Switch Profile");
-            System.out.println("4. Exit");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1:
-                    study();
-                    break;
-                case 2:
-                    viewStats();
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    exit = true;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Try again.");
-            }
-        }
-
     }
 
     private static void checkPassword(UserProfile profile) {
@@ -79,6 +81,7 @@ public class FlashcardTrainerJson {
     }
 
     private static UserProfile createNewProfile(String name) {
+        System.out.println("Creating new profile...");
         System.out.println("Enter a new password:");
 
         String password = scanner.nextLine();
