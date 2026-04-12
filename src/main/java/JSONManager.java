@@ -19,6 +19,7 @@ public class JSONManager {
     private static final String PROFILES_FILE = "profiles.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+    // TODO: add more flashcards in flashcards.json
     public ArrayList<Flashcard> loadFlashcards() {
         File file = new File(FLASHCARDS_FILE);
         if (!file.exists()) {
@@ -33,7 +34,7 @@ public class JSONManager {
             }
             return new ArrayList<>(Arrays.asList(flashcardArray));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
         return new ArrayList<>();
     }
@@ -48,8 +49,8 @@ public class JSONManager {
             }.getType();
             return gson.fromJson(reader, type);
 
-        } catch (IOException e) {;
-            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
         return new HashMap();
     }

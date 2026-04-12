@@ -1,8 +1,10 @@
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -27,6 +29,9 @@ public class FlashcardTrainerJson {
 
         login();
 
+        // TODO: Add a password protected admin mode 
+        // and have a menu to view all users, and delete users (save to Json)
+        // Hint: userProfiles.remove(key);
         boolean exit = false;
         while (!exit) {
             System.out.println("Welcome " + activeProfile.getUsername());
@@ -95,6 +100,58 @@ public class FlashcardTrainerJson {
     }
 
     public static void study() {
+        System.out.println("STUDY");
+        System.out.println("1. Study all topics");
+        System.out.println("2. Choose a topic");
+
+        String choice = scanner.nextLine();
+
+        switch (choice) {
+            case "1":
+                studyAllTopics();
+                break;
+            case "2":
+                selectTopic();
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                study();
+                break;
+        }
+    }
+
+    private static void selectTopic() {
+        System.out.println("Select a topic from the following:");
+
+        Set<String> topics = getAllTopics();
+        for (String topic : topics) {
+            System.out.print(topic + " ");
+        }
+        System.out.println();
+
+        String topic = scanner.nextLine();
+
+        if (topics.contains(topic)) {
+            studyTopic(topic);
+        } else {
+            System.out.println("No topic exists!");
+            selectTopic();
+        }
+    }
+
+    private static Set<String> getAllTopics() {
+        // Set eliminates duplicates
+        Set<String> topics = new HashSet();
+
+        for (Flashcard card : flashcards) {
+            String topic = card.getTopic();
+            topics.add(topic);
+        }
+
+        return topics;
+    }
+
+    private static void studyAllTopics() {
         Collections.shuffle(flashcards);
 
         for (Flashcard card : flashcards) {
@@ -114,12 +171,24 @@ public class FlashcardTrainerJson {
 
             jsonManager.saveUserProfiles(userProfiles);
         }
+
+        System.out.println("Complete!");
+    }
+
+    // TODO: Only study flashcards with the matching topic
+    private static void studyTopic(String topic) {
+
     }
 
     private static void viewStats() {
         int correct = activeProfile.getCorrectCount();
         int incorrect = activeProfile.getIncorrectCount();
-        int rate = correct * 100 / (correct + incorrect);
+        int total = correct + incorrect;
+        int rate = 100;
+        
+        if (total > 0) {
+            rate = correct * 100 / total;
+        }
 
         System.out.println("Profile: " + activeProfile.getUsername());
         System.out.println("Correct: " + correct);
