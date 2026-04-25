@@ -19,7 +19,6 @@ public class JSONManager {
     private static final String PROFILES_FILE = "profiles.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    // TODO: add more flashcards in flashcards.json
     public ArrayList<Flashcard> loadFlashcards() {
         File file = new File(FLASHCARDS_FILE);
         if (!file.exists()) {

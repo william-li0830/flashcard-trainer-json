@@ -28,13 +28,83 @@ public class FlashcardTrainerJson {
         System.out.println("Welcome to the flashcard trainer");
 
         login();
+    }
 
-        // TODO: Add a password protected admin mode 
-        // and have a menu to view all users, and delete users (save to Json)
-        // Hint: userProfiles.remove(key);
-        boolean exit = false;
-        while (!exit) {
-            System.out.println("Welcome " + activeProfile.getUsername());
+    private static void login() {
+        while (true) {
+            System.out.println("Login as:");
+            System.out.println("1. User");
+            System.out.println("2. Admin");
+
+            String role = scanner.nextLine();
+
+            switch (role) {
+                case "1":
+                    userLogin();
+                    break;
+                case "2":
+                    adminLogin();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private static void userLogin() {
+        System.out.println("Enter username:");
+        String name = scanner.nextLine().toLowerCase();
+
+        if (userProfiles.containsKey(name)) {
+            UserProfile profile = userProfiles.get(name);
+            checkPassword(profile);
+            activeProfile = profile;
+        } else {
+            activeProfile = createNewProfile(name);
+        }
+
+        userMenu();
+    }
+
+    private static void adminLogin() {
+        System.out.println("Enter password:");
+        String password = scanner.nextLine();
+        if (Admin.checkPassword(password)) {
+            adminMenu();
+        } else {
+            System.out.println("Incorrect!");
+            adminLogin();
+        }
+    }
+
+    private static void adminMenu() {
+        while (true) {
+            System.out.println("\nLogged in as admin");
+            System.out.println("======= MENU =======");
+            System.out.println("1. View all users");
+            System.out.println("2. Delete users");
+            System.out.println("3. Exit");
+
+            String choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    Admin.viewAllUsers(userProfiles);
+                    break;
+                case "2":
+                    Admin.deleteUsers(jsonManager, userProfiles);
+                    break;
+                case "3":
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private static void userMenu() {
+        while (true) {
+            System.out.println("\nWelcome " + activeProfile.getUsername());
             System.out.println("======= MAIN MENU =======");
             System.out.println("1. Study");
             System.out.println("2. View Your Stats");
@@ -51,27 +121,12 @@ public class FlashcardTrainerJson {
                     viewStats();
                     break;
                 case "3":
-                    login();
-                    break;
+                    return; // back to login
                 case "4":
-                    exit = true;
-                    break;
+                    System.exit(0);
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
-        }
-    }
-
-    private static void login() {
-        System.out.println("Enter username:");
-        String name = scanner.nextLine();
-
-        if (userProfiles.containsKey(name)) {
-            UserProfile profile = userProfiles.get(name);
-            checkPassword(profile);
-            activeProfile = profile;
-        } else {
-            activeProfile = createNewProfile(name);
         }
     }
 
@@ -116,7 +171,6 @@ public class FlashcardTrainerJson {
             default:
                 System.out.println("Invalid choice!");
                 study();
-                break;
         }
     }
 
@@ -131,7 +185,7 @@ public class FlashcardTrainerJson {
 
         String topic = scanner.nextLine();
 
-        if (topics.contains(topic)) {
+        if (topics.contains(topic.toLowerCase())) {
             studyTopic(topic);
         } else {
             System.out.println("No topic exists!");
@@ -155,29 +209,37 @@ public class FlashcardTrainerJson {
         Collections.shuffle(flashcards);
 
         for (Flashcard card : flashcards) {
-            System.out.println(card.getQuestion());
-
-            String userAnswer = scanner.nextLine().trim();
-            String answer = card.getAnswer().trim();
-
-            if (userAnswer.equalsIgnoreCase(answer)) {
-                System.out.println("Correct!");
-                activeProfile.increaseCorrectCount();
-            } else {
-                System.out.println("Incorrect!");
-                activeProfile.increaseIncorrectCount();
-                System.out.println("Answer: " + answer);
-            }
-
-            jsonManager.saveUserProfiles(userProfiles);
+            askQuestion(card);
         }
 
         System.out.println("Complete!");
     }
 
-    // TODO: Only study flashcards with the matching topic
     private static void studyTopic(String topic) {
+        Collections.shuffle(flashcards);
 
+        for (Flashcard card : flashcards) {
+            if (card.getTopic().equalsIgnoreCase(topic.trim())) {
+                askQuestion(card);
+            }
+        }
+
+        System.out.println("Complete!");
+    }
+
+    private static void askQuestion(Flashcard card) {
+        System.out.println(card.getQuestion());
+        String userAnswer = scanner.nextLine().trim();
+
+        if (userAnswer.equalsIgnoreCase(card.getAnswer().trim())) {
+            System.out.println("Correct!");
+            activeProfile.increaseCorrectCount();
+        } else {
+            System.out.println("Incorrect!");
+            activeProfile.increaseIncorrectCount();
+            System.out.println("Answer: " + card.getAnswer());
+        }
+        jsonManager.saveUserProfiles(userProfiles);
     }
 
     private static void viewStats() {
@@ -185,7 +247,7 @@ public class FlashcardTrainerJson {
         int incorrect = activeProfile.getIncorrectCount();
         int total = correct + incorrect;
         int rate = 100;
-        
+
         if (total > 0) {
             rate = correct * 100 / total;
         }

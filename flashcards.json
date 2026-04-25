@@ -1,62 +1,107 @@
 [
- {
-   "question": "What is 1 + 1?",
-   "answer": "2",
-   "topic": "math"
- },
- {
-   "question": "What is the capital of Canada?",
-   "answer": "Ottawa",
-   "topic": "geography"
- },
- {
-   "question": "What color do you get by mixing red and blue?",
-   "answer": "purple",
-   "topic": "art"
- },
- {
-   "question": "How many days are in a week?",
-   "answer": "7",
-   "topic": "general"
- },
- {
-   "question": "What is 12 * 6?",
-   "answer": "72",
-   "topic": "math"
- },
- {
-   "question": "What is the capital of France?",
-   "answer": "Paris",
-   "topic": "geography"
- },
- {
-   "question": "Who wrote Romeo and Juliet?",
-   "answer": "Shakespeare",
-   "topic": "english"
- },
- {
-   "question": "What planet is known as the Red Planet?",
-   "answer": "Mars",
-   "topic": "science"
- },
- {
-   "question": "What is the square root of 144?",
-   "answer": "12",
-   "topic": "math"
- },
- {
-   "question": "What year did World War 2 end?",
-   "answer": "1945",
-   "topic": "history"
- },
- {
-   "question": "What is H2O commonly known as?",
-   "answer": "water",
-   "topic": "science"
- },
- {
-   "question": "What is 15% of 200?",
-   "answer": "30",
-   "topic": "math"
- }
+    {
+        "question": "What is 1 + 1?",
+        "answer": "2",
+        "topic": "math"
+    },
+    {
+        "question": "What is the capital of Canada?",
+        "answer": "Ottawa",
+        "topic": "geography"
+    },
+    {
+        "question": "What color do you get by mixing red and blue?",
+        "answer": "purple",
+        "topic": "art"
+    },
+    {
+        "question": "What is 12 * 6?",
+        "answer": "72",
+        "topic": "math"
+    },
+    {
+        "question": "What is the capital of France?",
+        "answer": "Paris",
+        "topic": "geography"
+    },
+    {
+        "question": "Who wrote Romeo and Juliet?",
+        "answer": "Shakespeare",
+        "topic": "english"
+    },
+    {
+        "question": "What planet is known as the Red Planet?",
+        "answer": "Mars",
+        "topic": "science"
+    },
+    {
+        "question": "What is the square root of 144?",
+        "answer": "12",
+        "topic": "math"
+    },
+    {
+        "question": "What year did World War 2 end?",
+        "answer": "1945",
+        "topic": "history"
+    },
+    {
+        "question": "What is H2O commonly known as?",
+        "answer": "water",
+        "topic": "science"
+    },
+    {
+        "question": "Is 5/10 and 1/2 the same? (true or false)",
+        "answer": "true",
+        "topic": "math"
+    },
+    {
+        "question": "Who did Othello marry?",
+        "answer": "Desdemona",
+        "topic": "english"
+    },
+    {
+        "question": "Consider the geometric series: 1+2+4+8... What is the sum(up until the 10th term)?",
+        "answer": "1023",
+        "topic": "math"
+    },
+    {
+        "question": "What is the capital city of China?",
+        "answer": "Beijing",
+        "topic": "geography"
+    },
+    {
+        "question": "2 pi radians is equal to 360 degrees (True or false)",
+        "answer": "True",
+        "topic": "math"
+    },
+    {
+        "question": "A person encounters a police officer and pushes the officer. The officer's neck got broken and died. What degree of murder should the person be charged with?",
+        "answer": "first-degree murder",
+        "topic": "law"
+    },
+    {
+        "question": "The boiling point of water in celsius is.",
+        "answer": "100",
+        "topic": "science"
+    },
+    {
+        "question": "In a geometric sequence, if second term is 5 and sixth term is 80, what is the value of a?",
+        "answer": "2.5",
+        "topic": "math"
+    },
+    {
+        "question": "If sin A is positive and cos A is negative. Which quadrant would A be in?",
+        "answer": "2",
+        "topic": "math"
+    },
+    {
+        "question": "Cot A is negative but sec A is positive. Which quadrant would A be in?",
+        "answer": "4",
+        "topic": "math"
+    },
+    {
+        "question": "What is the source data for an income statement?",
+        "answer": "the trial balance",
+        "topic": "accounting"
+    }
 ]
